@@ -31,4 +31,8 @@ const searchQuery = searchParams.get('q') || '';
       return matchesTitle && matchesCategory;
     });
   }, [products, searchQuery, selectedCategory]);
+
+  if (loading) {
+    return <div style={{ textAlign: 'center', padding: '2rem' }}>Loading products catalogue...</div>;
+  }
 }
