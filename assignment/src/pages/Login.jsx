@@ -7,4 +7,6 @@ export default function Login() {
 const navigate = useNavigate();
   const location = useLocation();
   const { login: setAuthUser } = useAuth();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 }
