@@ -5,5 +5,5 @@ import { fetchProducts } from '../api/productsApi';
 import ProductCard from '../components/ProductCard';
 
 export default function ProductList() {
-
+const [searchParams, setSearchParams] = useSearchParams();
 }
