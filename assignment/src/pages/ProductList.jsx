@@ -18,5 +18,8 @@ const searchQuery = searchParams.get('q') || '';
     setSearchParams(newParams);
   };
 
-  
+  const categories = React.useMemo(() => {
+    if (!products) return [];
+    return Array.from(new Set(products.map((p) => p.category)));
+  }, [products]);
 }
