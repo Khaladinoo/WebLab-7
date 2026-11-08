@@ -4,11 +4,13 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+body.theme-light,
 .theme-light {
   background-color: #ffffff;
   color: #2c3e50;
 }
 
+body.theme-dark,
 .theme-dark {
   background-color: #1a252f;
   color: #ecf0f1;
@@ -29,6 +31,18 @@ body {
   background-color: #243342;
   color: #ecf0f1;
   border: 1px solid #34495e;
+  border-radius: 4px;
+}
+
+.theme-dark nav button {
+  background-color: #243342;
+  color: #ecf0f1;
+  border: 1px solid #34495e;
+}
+
+nav button {
+  cursor: pointer;
+  padding: 0.4rem 0.8rem;
   border-radius: 4px;
 }
 

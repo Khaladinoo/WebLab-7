@@ -8,7 +8,8 @@ export default function NavBar({ theme: propTheme, onToggleTheme }) {
   const { user, logout } = useAuth();
   const [localTheme, setLocalTheme] = useLocalStorage('theme', 'light');
 
-  const theme = propTheme !== undefined ? propTheme : localTheme;
+  const isControlled = propTheme !== undefined && onToggleTheme !== undefined;
+  const theme = isControlled ? propTheme : localTheme;
 
   // Select only the items array from Zustand store to calculate item count
   const items = useCartStore((state) => state.items);
@@ -18,10 +19,10 @@ export default function NavBar({ theme: propTheme, onToggleTheme }) {
 
   // Toggle theme mode
   const toggleTheme = () => {
-    if (onToggleTheme) {
+    if (isControlled) {
       onToggleTheme();
     } else {
-      setLocalTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+      setLocalTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
     }
   };
 
@@ -48,7 +49,7 @@ export default function NavBar({ theme: propTheme, onToggleTheme }) {
       </div>
 
       <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-        <button onClick={toggleTheme}>
+        <button type="button" onClick={toggleTheme}>
           Theme: {theme === 'light' ? 'Light' : 'Dark'}
         </button>
 

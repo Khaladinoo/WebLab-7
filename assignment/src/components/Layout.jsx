@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import NavBar from './NavBar';
 import useLocalStorage from '../hooks/useLocalStorage';
@@ -7,8 +8,12 @@ export default function Layout() {
   const [theme, setTheme] = useLocalStorage('theme', 'light');
 
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+    setTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'));
   };
+
+  useEffect(() => {
+    document.body.className = `theme-${theme}`;
+  }, [theme]);
 
   return (
     <div className={`app-layout theme-${theme}`} style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
