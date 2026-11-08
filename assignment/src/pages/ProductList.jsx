@@ -6,4 +6,6 @@ import ProductCard from '../components/ProductCard';
 
 export default function ProductList() {
 const [searchParams, setSearchParams] = useSearchParams();
+const searchQuery = searchParams.get('q') || '';
+  const selectedCategory = searchParams.get('category') || '';
 }
