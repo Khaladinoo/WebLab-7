@@ -29,7 +29,28 @@ export default function useFetch(fetchFunction, dependencies = []) {
 
     async function executeFetch() {
       dispatch({ type: 'FETCH_INIT' });
-    }
-  }
-}
+      try {
+        const result = await fetchFunction(signal);
+        
+        if (isMounted) {
+          dispatch({ type: 'FETCH_SUCCESS', payload: result });
+        }
+      } catch (err) {
+        if (err.name === 'AbortError') return;
 
+        if (isMounted) {
+          dispatch({ type: 'FETCH_FAILURE', payload: err.message || 'An error occurred' });
+        }
+      }
+    }
+
+    executeFetch();
+
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
+  }, dependencies);
+
+  return { data: state.data, loading: state.loading, error: state.error };
+}
