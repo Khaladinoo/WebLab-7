@@ -5,9 +5,11 @@ import { fetchProducts } from '../api/productsApi';
 import ProductCard from '../components/ProductCard';
 
 export default function ProductList() {
-const [searchParams, setSearchParams] = useSearchParams();
-const searchQuery = searchParams.get('q') || '';
+  const { data: products, loading, error } = useFetch(fetchProducts);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchQuery = searchParams.get('q') || '';
   const selectedCategory = searchParams.get('category') || '';
+
   const updateSearchParam = (key, value) => {
     const newParams = new URLSearchParams(searchParams);
     if (value) {

@@ -4,7 +4,6 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-
 .theme-light {
   background-color: #ffffff;
   color: #2c3e50;
@@ -25,6 +24,13 @@ body {
   border-color: #34495e !important;
 }
 
+.theme-dark input,
+.theme-dark select {
+  background-color: #243342;
+  color: #ecf0f1;
+  border: 1px solid #34495e;
+  border-radius: 4px;
+}
 
 .active-link {
   font-weight: bold;

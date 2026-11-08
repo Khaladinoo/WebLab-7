@@ -1,13 +1,14 @@
-import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import useCartStore from '../store/cartStore';
 import useLocalStorage from '../hooks/useLocalStorage';
 
-export default function NavBar() {
+export default function NavBar({ theme: propTheme, onToggleTheme }) {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
-  const [theme, setTheme] = useLocalStorage('theme', 'light');
+  const [localTheme, setLocalTheme] = useLocalStorage('theme', 'light');
+
+  const theme = propTheme !== undefined ? propTheme : localTheme;
 
   // Select only the items array from Zustand store to calculate item count
   const items = useCartStore((state) => state.items);
@@ -17,7 +18,11 @@ export default function NavBar() {
 
   // Toggle theme mode
   const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
+    if (onToggleTheme) {
+      onToggleTheme();
+    } else {
+      setLocalTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+    }
   };
 
   // Handle logout action
