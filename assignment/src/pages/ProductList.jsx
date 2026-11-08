@@ -22,4 +22,13 @@ const searchQuery = searchParams.get('q') || '';
     if (!products) return [];
     return Array.from(new Set(products.map((p) => p.category)));
   }, [products]);
+
+  const filteredProducts = React.useMemo(() => {
+    if (!products) return [];
+    return products.filter((product) => {
+      const matchesTitle = product.title.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesCategory = selectedCategory ? product.category === selectedCategory : true;
+      return matchesTitle && matchesCategory;
+    });
+  }, [products, searchQuery, selectedCategory]);
 }
