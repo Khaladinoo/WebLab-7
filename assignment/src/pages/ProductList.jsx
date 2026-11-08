@@ -8,4 +8,15 @@ export default function ProductList() {
 const [searchParams, setSearchParams] = useSearchParams();
 const searchQuery = searchParams.get('q') || '';
   const selectedCategory = searchParams.get('category') || '';
+  const updateSearchParam = (key, value) => {
+    const newParams = new URLSearchParams(searchParams);
+    if (value) {
+      newParams.set(key, value);
+    } else {
+      newParams.delete(key);
+    }
+    setSearchParams(newParams);
+  };
+
+  
 }
