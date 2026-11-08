@@ -10,7 +10,13 @@ export async function fetchProducts(signal) {
 export async function fetchProduct(id, signal){
         // Execute HTTP GET request for a specific product ID
         const response = await fetch(`${BASE_URL}/${id}`,{signal});
-        
+        // Validate HTTP response status
+        if (!response.ok) {
+            if (response.status === 404){
+                throw new Error('Product not found');
+            }
+            throw new Error(`Failed to fetch product" ${response.status} ${response.statusText}`);
+        }
         // Parce and return single product object
         const data = await response.json();
         return data;
