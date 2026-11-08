@@ -18,4 +18,18 @@ function fetchReducer(state, action) {
       return state;
   }
 }
+export default function useFetch(fetchFunction, dependencies = []) {
+  const [state, dispatch] = useReducer(fetchReducer, initialState);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const { signal } = controller;
+
+    let isMounted = true;
+
+    async function executeFetch() {
+      dispatch({ type: 'FETCH_INIT' });
+    }
+  }
+}
 
