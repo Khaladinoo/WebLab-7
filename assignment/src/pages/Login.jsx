@@ -9,4 +9,6 @@ const navigate = useNavigate();
   const { login: setAuthUser } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 }
