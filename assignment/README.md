@@ -1,16 +1,122 @@
-# React + Vite
+# WebLab-7: MiniShop E-Commerce Web Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-featured React e-commerce single-page application (SPA) built for Web Development Lab 7 at Biruni University. The application integrates live product data from the DummyJSON API, global cart state management with Zustand, custom React hooks, dynamic routing with React Router v7, authentication context, and persistent light/dark theming.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Key Features
 
-## React Compiler
+* **Live Product Catalogue (`/products`)**:
+  * Fetches real-time product data using a custom async `useFetch` hook.
+  * Title search filter with instant client-side filtering.
+  * Dynamic category extraction and dropdown filter.
+  * **URL as State**: Search queries (`q`) and category selections (`category`) synchronize directly with URL search parameters (`useSearchParams`).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* **Dynamic Product Details (`/products/:id`)**:
+  * Dynamic route parameter resolution with `useParams`.
+  * Detailed view displaying thumbnail, category badge, brand, star rating, price, and description.
+  * Direct "Add to Cart" integration with instantaneous feedback.
 
-## Expanding the ESLint configuration
+* **Global Cart State Management (`/cart`)**:
+  * Powered by **Zustand** (`cartStore.js`).
+  * Add items, increment/decrement quantities, remove single items, or clear cart.
+  * Real-time derived state calculation for total item count (displayed on the navigation badge) and total price.
+  * Empty cart handling with call-to-action redirect.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+* **Authentication & Protected Routes**:
+  * **AuthContext** state management using `useReducer` (`LOGGED_IN` / `LOGGED_OUT`).
+  * **ProtectedRoute** guard wrapping the `/cart` route; redirects unauthenticated visitors to `/login` and remembers intended destination via `location.state`.
+  * Simulated async authentication API with credential validation and simulated network latency.
+
+* **Persistent Light / Dark Theme**:
+  * Seamless theme toggling between Light and Dark mode.
+  * Persistent storage across page reloads via custom `useLocalStorage` hook.
+  * Smooth CSS transitions across layout, navigation, inputs, and background.
+
+---
+
+## 🛠️ Tech Stack
+
+* **Framework**: React 19 (`react`, `react-dom` v19.3.1)
+* **Build Tool & Dev Server**: Vite 8
+* **Routing**: React Router DOM v7 (`react-router-dom` v7.18.5)
+* **Global State**: Zustand (`zustand` v5.1.0)
+* **Styling**: Vanilla CSS with CSS custom properties and light/dark theme classes
+* **External API**: [DummyJSON Products API](https://dummyjson.com/products)
+
+---
+
+## 📁 Project Architecture
+
+```text
+WebLab-7/
+├── assignment/
+│   ├── public/
+│   ├── src/
+│   │   ├── api/
+│   │   │   ├── authApi.js          # Simulated authentication API
+│   │   │   └── productsApi.js      # DummyJSON API endpoints (all products & single product)
+│   │   ├── components/
+│   │   │   ├── Layout.jsx          # Root layout shell with theme binding and Outlet
+│   │   │   ├── NavBar.jsx          # Header navigation, live cart count, theme toggle, auth status
+│   │   │   ├── ProductCard.jsx     # Reusable product grid item card
+│   │   │   └── ProtectedRoute.jsx  # Route guard redirecting to /login
+│   │   ├── context/
+│   │   │   └── AuthContext.jsx     # React Context + useReducer for global auth state
+│   │   ├── hooks/
+│   │   │   ├── useFetch.js         # Custom hook for async fetching, AbortController, and states
+│   │   │   └── useLocalStorage.js  # Custom hook for localStorage persistence
+│   │   ├── pages/
+│   │   │   ├── Cart.jsx            # Shopping cart management view
+│   │   │   ├── Home.jsx            # Landing page
+│   │   │   ├── Login.jsx           # Controlled sign-in form
+│   │   │   ├── NotFound.jsx        # 404 error page
+│   │   │   ├── ProductDetail.jsx   # Single product view with details
+│   │   │   └── ProductList.jsx     # Product catalogue with search and filter controls
+│   │   ├── store/
+│   │   │   └── cartStore.js        # Global Zustand store for cart items and quantities
+│   │   ├── App.jsx                 # Central route configuration
+│   │   ├── index.css               # Typography, global reset, and light/dark theme variables
+│   │   └── main.jsx                # Application root entry point with BrowserRouter
+│   ├── index.html
+│   ├── package.json
+│   └── vite.config.js
+└── package.json
+```
+
+---
+
+## 🚦 Getting Started
+
+### Prerequisites
+
+* [Node.js](https://nodejs.org/) (version 18+ or 20+ recommended)
+* `npm` package manager
+
+### Installation
+
+1. Clone or open the repository:
+   ```bash
+   cd WebLab-7/assignment
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+### Running the Development Server
+
+Start the local Vite development server:
+```bash
+npm run dev
+```
+Open your browser and navigate to `http://localhost:5173`.
+
+---
+
+## 🔑 Demo Credentials
+
+To test protected routes and the checkout/cart access:
+* **Username / Email**: Any non-empty student email (e.g., `student@biruni.edu.tr`)
+* **Password**: `demo123456`
