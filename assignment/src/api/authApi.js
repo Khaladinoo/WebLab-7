@@ -7,8 +7,8 @@ export async function login(username, password){
                     loginTime: new Date().toISOString()
                 });
             }else{
-                
+                reject(new Error('Invalid credentials'));
             }
-        })
-    })
+        }, 500);
+    });
 }
